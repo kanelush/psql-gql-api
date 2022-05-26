@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 # Create your models here.
 class Category(models.Model):
@@ -41,3 +42,17 @@ class Competencia(models.Model):
         ordering = ['-date_created']
     def __str__(self):
         return self.title
+
+def random_string():
+      return str(random.randint(1000000, 99999999))
+
+class Producto(models.Model):
+    name = models.CharField(max_length=155)
+    description = models.TextField()
+    price = models.IntegerField()
+    negocio_parent = models.ForeignKey(Negocios, on_delete=models.CASCADE, null=True)
+    buy_order = models.CharField(default=random_string, max_length=100)
+    session_id = models.CharField(default=random_string, max_length=100)
+
+    def __str__(self):
+        return self.name

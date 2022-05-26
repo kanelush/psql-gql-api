@@ -1,14 +1,12 @@
 import graphene
 from graphene_django import DjangoObjectType
-from .models import Category, Negocios, Contact, Competencia
+from .models import Category, Negocios, Contact, Competencia, Producto
 from ninja import Schema, ModelSchema
 
 class ContactSchema(ModelSchema):
     class Config:
         model = Contact
         model_fields = '__all__'
-class NotFoundSchema(Schema):
-    message: str
 
 class CompetenciaSchema(Schema):
     id: int
@@ -16,8 +14,6 @@ class CompetenciaSchema(Schema):
     description: str
     image: str
 
-class NotFoundSchema(Schema):
-    message: str
 
 class NegocioSchema(Schema):
     id: int
@@ -25,6 +21,11 @@ class NegocioSchema(Schema):
     cat_name: str
     image: str
     description: str
+
+class ProductoSchema(ModelSchema):
+    class Config:
+        model = Producto
+        model_fields = '__all__'
 
 class NotFoundSchema(Schema):
     message: str

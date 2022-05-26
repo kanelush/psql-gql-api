@@ -1,7 +1,7 @@
 from ninja import NinjaAPI
-from core.models import Category, Negocios, Contact, Competencia
+from core.models import Category, Negocios, Contact, Competencia, Producto
 from typing import List
-from core.schema import NegocioSchema, NotFoundSchema, ContactSchema, CompetenciaSchema
+from core.schema import NegocioSchema, NotFoundSchema, ContactSchema, CompetenciaSchema, ProductoSchema
 
 api = NinjaAPI()
 
@@ -64,3 +64,24 @@ def delete_negocio(request, negocio_id: int, data: NegocioSchema):
         return 200 
     except Negocios.DoesNotExist as e:
         return 404, {"message": "Negocio no existe"}
+
+@api.get("/productos", response=List[ProductoSchema])
+def productos(request):
+    print(Producto.objects.filter(negocio_parent_id=2))
+    return Producto.objects.all()
+
+@api.get("/productos/sorted/{negocio_parent_id}", response=List[ProductoSchema])
+def productosfilt(request, negocio_parent_id: int):
+    try:
+        producto = Producto.objects.filter(negocio_parent_id=negocio_parent_id)
+        return 200, producto
+    except Producto.DoesNotExist as e:
+        return 404, {"message": "Producto no existe"}
+
+@api.get("/productos/{producto_id}", response={200:ProductoSchema, 404:NotFoundSchema})
+def producto(request, producto_id: int):
+    try:
+        producto = Producto.objects.get(pk=producto_id)
+        return 200, producto
+    except Producto.DoesNotExist as e:
+        return 404, {"message": "Producto no existe"}
