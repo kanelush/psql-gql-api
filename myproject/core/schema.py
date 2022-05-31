@@ -1,6 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
-from .models import Category, Negocios, Contact, Competencia, Producto
+from .models import Category, Negocios, Contact, Competencia, Producto, Token
 from ninja import Schema, ModelSchema
 
 class ContactSchema(ModelSchema):
@@ -25,6 +25,11 @@ class NegocioSchema(Schema):
 class ProductoSchema(ModelSchema):
     class Config:
         model = Producto
+        model_fields = '__all__'
+
+class TokenSchema(ModelSchema):
+    class Config:
+        model = Token
         model_fields = '__all__'
 
 class NotFoundSchema(Schema):

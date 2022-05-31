@@ -17,3 +17,4 @@ Pillow==9.1.0
 whitenoise==6.0.0
 django-ninja==0.17.0
 psycopg2-binary>=2.8
+transbank-sdk

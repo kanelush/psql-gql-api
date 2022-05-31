@@ -53,6 +53,15 @@ class Producto(models.Model):
     negocio_parent = models.ForeignKey(Negocios, on_delete=models.CASCADE, null=True)
     buy_order = models.CharField(default=random_string, max_length=100)
     session_id = models.CharField(default=random_string, max_length=100)
+    image = models.ImageField(upload_to ='uploads/', blank=True, null=True)
+    date_created = models.DateField(auto_now_add=True)
+    token = models.CharField(max_length=500, blank=True, null=True)
+    url = models.CharField(max_length=500, blank=True, null=True)
+    token_ws = models.CharField(max_length=500, blank=True, null=True)
+
 
     def __str__(self):
         return self.name
+
+class Token(models.Model):
+    token_ws = models.TextField(blank=True, null=True)
